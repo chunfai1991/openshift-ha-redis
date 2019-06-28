@@ -1,5 +1,5 @@
 # openshift-ha-redis
-Openshift Redis HA(High Availability) Mode
+Openshift Redis HA(High Availability) Mode (WIP)
 
 You need to insert the following parameter to customize your redis
 
