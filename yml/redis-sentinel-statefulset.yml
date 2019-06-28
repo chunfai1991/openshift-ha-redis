@@ -23,7 +23,7 @@ spec:
           - /bin/sh
           - '-c'		  
         name: redis-sentinel
-        image: <A Valid Redis Image>
+        image: <Redis_Image>
         ports:
         - containerPort: 6379
           protocol: TCP
