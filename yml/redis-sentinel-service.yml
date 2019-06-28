@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-sentinel
+  labels:
+    app: redis-sentinel
+spec:
+  ports:
+    - name: redis-sentinel-nodes
+      port: 6379
+      protocol: TCP
+      targetPort: 6379
+  clusterIP: <CLUSTER_IP>
+  selector:
+    app: redis-sentinel
