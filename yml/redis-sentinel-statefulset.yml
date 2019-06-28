@@ -23,7 +23,7 @@ spec:
           - /bin/sh
           - '-c'		  
         name: redis-sentinel
-        image: docker-registry.default.svc:5000/openshift/redis@sha256:407c34e8042818fb860a9df0dcc758cfd7abe75171c5bfcb0fe4c89acc099985
+        image: <A Valid Redis Image>
         ports:
         - containerPort: 6379
           protocol: TCP
