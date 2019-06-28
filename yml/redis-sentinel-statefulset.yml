@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: redis-sentinel
+spec:
+  serviceName: "redis-sentinel"
+  replicas: 3
+  selector:
+    matchLabels:
+      app: redis-sentinel
+  template:
+    metadata:
+      labels:
+        app: redis-sentinel
+    spec:
+      containers:
+      - args:
+          - >-
+            cp /redis-config/redis.conf /var/lib/redis/data/redis.conf;
+            /opt/rh/rh-redis32/root/usr/bin/redis-sentinel
+            /var/lib/redis/data/redis.conf
+        command:
+          - /bin/sh
+          - '-c'		  
+        name: redis-sentinel
+        image: docker-registry.default.svc:5000/openshift/redis@sha256:407c34e8042818fb860a9df0dcc758cfd7abe75171c5bfcb0fe4c89acc099985
+        ports:
+        - containerPort: 6379
+          protocol: TCP
+        volumeMounts:
+          - name: redis-sentinel
+            mountPath: /var/lib/redis/data
+          -	name: redis-sentinel-config
+            mountPath: /redis-config/redis.conf
+            subPath: redis.conf  	
+      volumes:
+      - name: redis-sentinel-config
+        configMap:
+          items:
+          - key: redis.conf
+            path: redis.conf
+          name: redis-sentinel-config            
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-sentinel
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
